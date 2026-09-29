@@ -1,0 +1,32 @@
+# llm-vuln-agent — dependencies
+#
+# The core system is deliberately standard-library only so the demo and the
+# full test suite run offline with no API keys or external services.
+#
+# Optional integrations (install only what you need):
+
+# Real LLM provider (OpenAI-compatible). Requires an API key via env var.
+# openai>=1.30
+
+# Optional REST API layer.
+# fastapi>=0.110
+# uvicorn>=0.29
+
+# Optional Milvus vector store (replaces the in-memory store).
+# pymilvus>=2.4
+
+# Optional persistent databases (replaces the stdlib SQLite store).
+# pymongo>=4.6
+# PyMySQL>=1.1
+
+# Optional nmap-backed scanning (replaces the pure-Python socket scanner).
+# python-nmap>=0.7
+
+# Optional HTTP helpers (stdlib fallback is provided).
+# requests>=2.31
+
+# Config: PyYAML is used when available; the loader falls back to defaults.
+# PyYAML>=6.0
+
+# Tests.
+# pytest>=8.0

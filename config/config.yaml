@@ -1,0 +1,53 @@
+# llm-vuln-agent configuration.
+# API keys are read from environment variables only — never committed here.
+
+targets:
+  # Authorized targets only. The tool layer rejects anything not on this list.
+  allowlist:
+    - "127.0.0.1"
+    - "::1"
+    - "localhost"
+  denylist: []
+
+network:
+  timeout_seconds: 3.0
+  max_ports: 100
+  scan_ports: [80, 443, 8080, 8000, 22, 21, 25, 3306, 5432, 6379]
+
+llm:
+  provider: "mock"             # "mock" (deterministic, offline) | "openai"
+  model: "gpt-4o-mini"
+  base_url: ""                 # empty -> OpenAI default; set for compatible endpoints
+  api_key_env: "LLM_API_KEY"   # name of the environment variable holding the key
+  temperature: 0.0
+  max_tokens: 2000
+
+  # --- DeepSeek preset (OpenAI-compatible). To enable, set LLM_API_KEY=sk-... and use: ---
+  #   provider: "openai"
+  #   model: "deepseek-v4-flash"        # fast & cheap; "deepseek-v4-pro" for stronger reasoning
+  #   base_url: "https://api.deepseek.com"
+
+embedding:
+  provider: "hash"             # "hash" (deterministic, offline) | "openai"
+  dim: 256
+
+vector_store:
+  provider: "memory"           # "memory" | "milvus"
+  collection: "cve_knowledge_base"
+
+database:
+  provider: "sqlite"           # "sqlite" | "mongodb" | "mysql"
+  path: "data/results.db"
+
+rag:
+  top_k: 5
+  semantic_weight: 0.5
+  product_weight: 0.35
+  vendor_weight: 0.15
+
+verification:
+  timeout_seconds: 5.0
+  non_destructive_only: true
+
+logging:
+  level: "INFO"
